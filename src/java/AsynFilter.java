@@ -5,7 +5,6 @@ import java.io.IOException;
 /**
  * Created by lisa on 2016/9/13.
  */
-
 @WebFilter(filterName ="AsynFilter",value = {"/servlet/AsynServlet"},dispatcherTypes = {DispatcherType.REQUEST,DispatcherType.ASYNC},asyncSupported=true)
 public class AsynFilter implements Filter {
     @Override
