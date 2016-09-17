@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="filter" default="all">
+  
+  
+  <property file="filter.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.tox/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <path id="library.tomcat_8.0.20.classpath">
+    <pathelement location="D:/apache-tomcat-8/lib/jsp-api.jar"/>
+    <pathelement location="D:/apache-tomcat-8/lib/servlet-api.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module filter -->
+  
+  <dirname property="module.filter.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.filter" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.filter" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.filter" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.filter" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="filter.output.dir" value="${module.filter.basedir}/out/production/filter"/>
+  <property name="filter.testoutput.dir" value="${module.filter.basedir}/out/test/filter"/>
+  
+  <path id="filter.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="filter.module.production.classpath">
+    <path refid="${module.jdk.classpath.filter}"/>
+    <path refid="library.tomcat_8.0.20.classpath"/>
+    <fileset dir="${basedir}/../../apache-ant-1.9.4/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="filter.runtime.production.module.classpath">
+    <pathelement location="${filter.output.dir}"/>
+    <fileset dir="${basedir}/../../apache-ant-1.9.4/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="filter.module.classpath">
+    <path refid="${module.jdk.classpath.filter}"/>
+    <pathelement location="${filter.output.dir}"/>
+    <path refid="library.tomcat_8.0.20.classpath"/>
+    <fileset dir="${basedir}/../../apache-ant-1.9.4/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="filter.runtime.module.classpath">
+    <pathelement location="${filter.testoutput.dir}"/>
+    <pathelement location="${filter.output.dir}"/>
+    <path refid="library.tomcat_8.0.20.classpath"/>
+    <fileset dir="${basedir}/../../apache-ant-1.9.4/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.filter">
+    <patternset refid="ignored.files"/>
+    <exclude name="out/**"/>
+    <exclude name="out/test/**"/>
+    <exclude name="out/test/filter/**"/>
+    <exclude name="out/test/filter/lib/**"/>
+    <exclude name="out/test/filter/web/**"/>
+    <exclude name="out/test/filter/web/WEB-INF/**"/>
+    <exclude name="out/test/filter/.idea/**"/>
+    <exclude name="out/test/filter/.idea/copyright/**"/>
+    <exclude name="out/production/**"/>
+    <exclude name="out/production/filter/**"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.filter">
+    <patternset refid="excluded.from.module.filter"/>
+  </patternset>
+  
+  <path id="filter.module.sourcepath">
+    <dirset dir="${module.filter.basedir}/../../ideaWorkspace">
+      <include name="filter/src"/>
+      <include name="filter/src/java"/>
+    </dirset>
+  </path>
+  
+  <path id="filter.module.test.sourcepath">
+    <dirset dir="${module.filter.basedir}/../../ideaWorkspace">
+      <include name="filter"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.filter" depends="compile.module.filter.production,compile.module.filter.tests" description="Compile module filter"/>
+  
+  <target name="compile.module.filter.production" description="Compile module filter; production classes">
+    <mkdir dir="${filter.output.dir}"/>
+    <javac destdir="${filter.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.filter}/javac">
+      <compilerarg line="${compiler.args.filter}"/>
+      <bootclasspath refid="filter.module.bootclasspath"/>
+      <classpath refid="filter.module.production.classpath"/>
+      <src refid="filter.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.filter"/>
+    </javac>
+    
+    <copy todir="${filter.output.dir}">
+      <fileset dir="${module.filter.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.filter.basedir}/src/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.filter.tests" depends="compile.module.filter.production" description="compile module filter; test classes" unless="skip.tests">
+    <mkdir dir="${filter.testoutput.dir}"/>
+    <javac destdir="${filter.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.filter}/javac">
+      <compilerarg line="${compiler.args.filter}"/>
+      <bootclasspath refid="filter.module.bootclasspath"/>
+      <classpath refid="filter.module.classpath"/>
+      <src refid="filter.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.filter"/>
+    </javac>
+    
+    <copy todir="${filter.testoutput.dir}">
+      <fileset dir="${module.filter.basedir}">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.filter" description="cleanup module">
+    <delete dir="${filter.output.dir}"/>
+    <delete dir="${filter.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.filter" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.filter" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
