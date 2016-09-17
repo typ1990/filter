@@ -23,9 +23,9 @@ public class AsynServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AsyncContext asyncContext=req.getAsyncContext();
-        System.out.println("servlet开始时间********************"+new Date());
+        System.out.println("servlet ********************"+new Date());
         new Thread(new Excutor(asyncContext)).start();
-        System.out.println("servlet结束时间********************" + new Date());
+        System.out.println("servlet ********************" + new Date());
 
 
     }
@@ -40,13 +40,13 @@ public class AsynServlet extends HttpServlet {
         @Override
         public void run() {
 
-            System.out.println("Thread开始时间********************"+new Date());
+            System.out.println("Thread ********************"+new Date());
             try {
-                //开始业务逻辑
+
 //                asyncContext.getRequest();
 //                asyncContext.getResponse();
                 Thread.sleep(10000L);
-                System.out.println("Thread结束时间********************"+new Date());
+                System.out.println("Thread ********************"+new Date());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
